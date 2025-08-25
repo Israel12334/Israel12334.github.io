@@ -1,177 +1,218 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Consulta BR Mobile(site de consulta simples)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: "Courier New", monospace;
-      background: #0a0a0a;
-      color: #e6e6e6;
-      margin: 0;
-    }
-
-    header {
-      background: #111;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid #ff4747;
-    }
-    header h1 {
-      font-size: 20px;
-      color: #ff4747;
-      margin: 0;
-    }
-    .menu-btn {
-      font-size: 25px;
-      cursor: pointer;
-      user-select: none;
-    }
-    nav {
-      display: none;
-      flex-direction: column;
-      background: #1a1a1a;
-      border-bottom: 2px solid #ff4747;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 15px;
-      border-bottom: 1px solid #333;
-    }
-    nav a:hover {
-      background: #ff4747;
-    }
-
-    .container {
-      padding: 20px;
-    }
-    .card {
-      background: #1a1a1a;
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 71, 71, 0.2);
-    }
-    h2 {
-      margin-top: 0;
-      font-size: 18px;
-      color: #ff4747;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 6px;
-      outline: none;
-      font-size: 16px;
-    }
-    button {
-      background: #ff4747;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #e63939;
-    }
-    pre {
-      background: #111;
-      padding: 15px;
-      border-radius: 10px;
-      max-height: 300px;
-      overflow: auto;
-      color: #00ff88;
-      font-size: 14px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 13px;
-      color: #555;
-      background: #111;
-      border-top: 2px solid #ff4747;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Consulta BR Turbo Visual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:"Courier New",monospace;background:#0a0a0a;color:#e6e6e6;margin:0;scroll-behavior:smooth;}
+header{background:#111;padding:15px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #ff4747;position:sticky;top:0;z-index:1000;}
+header h1{font-size:20px;color:#ff4747;margin:0;text-shadow:0 0 5px #ff4747;}
+.menu-btn{font-size:25px;cursor:pointer;user-select:none;color:#ff4747;}
+nav{display:none;flex-direction:column;background:#1a1a1a;border-bottom:2px solid #ff4747;position:sticky;top:50px;}
+nav a{color:white;text-decoration:none;padding:15px;border-bottom:1px solid #333;}
+nav a:hover{background:#ff4747;transition:0.2s;}
+.container{padding:20px;}
+.card{background:#1a1a1a;margin-bottom:20px;padding:20px;border-radius:12px;box-shadow:0 0 15px rgba(255,71,71,0.4);transition:0.3s;position:relative;}
+.card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(255,71,71,0.6);}
+h2{margin-top:0;font-size:18px;color:#ff4747;text-shadow:0 0 3px #ff4747;}
+input{width:100%;padding:12px;margin-bottom:10px;border:none;border-radius:6px;outline:none;font-size:16px;background:#111;color:#00ff88;box-shadow:0 0 10px #00ff88;}
+input::placeholder{color:#555;}
+button{background:#ff4747;color:white;border:none;padding:12px;border-radius:8px;font-size:16px;width:100%;cursor:pointer;box-shadow:0 0 10px #ff4747;}
+button:hover{background:#e63939;transition:0.2s;box-shadow:0 0 15px #ff4747;}
+pre{background:#111;padding:15px;border-radius:10px;max-height:300px;overflow:auto;color:#00ff88;font-size:14px;white-space:pre-wrap;box-shadow:0 0 10px #00ff88;}
+footer{text-align:center;padding:15px;font-size:13px;color:#555;background:#111;border-top:2px solid #ff4747;}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Consulta BR</h1>
-    <span class="menu-btn" onclick="toggleMenu()">☰</span>
-  </header>
-  <nav id="menu">
-    <a href="#cep">🔎 CEP</a>
-    <a href="#cnpj">🏢 CNPJ</a>
-    <a href="#ip">🌍 IP</a>
-  </nav>
+<header>
+<h1>Consulta BR Turbo</h1>
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
+</header>
+<nav id="menu">
+<a href="#cep">🔎 CEP</a>
+<a href="#cnpj">🏢 CNPJ</a>
+<a href="#cpf">🧾 CPF</a>
+<a href="#ip">🌍 IP</a>
+<a href="#telefone">📱 Número</a>
+<a href="#cloudflare">☁️ Cloudflare</a>
+<a href="#whois">📝 WHOIS</a>
+<a href="#ping">⚡ Ping</a>
+</nav>
 
-  <div class="container">
-    <!-- CEP -->
-    <div class="card" id="cep">
-      <h2>🔎 Consultar CEP</h2>
-      <input id="cepInput" placeholder="Digite o CEP">
-      <button onclick="consultaCEP()">Buscar</button>
-    </div>
+<div class="container">
+<!-- CEP -->
+<div class="card" id="cep">
+<h2>🔎 Consultar CEP</h2>
+<input id="cepInput" placeholder="Digite o CEP">
+<button onclick="consultaCEP()">Buscar</button>
+</div>
 
-    <!-- CNPJ -->
-    <div class="card" id="cnpj">
-      <h2>🏢 Consultar CNPJ</h2>
-      <input id="cnpjInput" placeholder="Digite o CNPJ">
-      <button onclick="consultaCNPJ()">Buscar</button>
-    </div>
+<!-- CNPJ -->
+<div class="card" id="cnpj">
+<h2>🏢 Consultar CNPJ</h2>
+<input id="cnpjInput" placeholder="Digite o CNPJ">
+<button onclick="consultaCNPJ()">Buscar</button>
+</div>
 
-    <!-- IP -->
-    <div class="card" id="ip">
-      <h2>🌍 Consultar IP</h2>
-      <input id="ipInput" placeholder="Digite o IP">
-      <button onclick="consultaIP()">Buscar</button>
-    </div>
-  </div>
+<!-- CPF -->
+<div class="card" id="cpf">
+<h2>🧾 Consultar CPF</h2>
+<input id="cpfInput" placeholder="Digite o CPF (somente números)">
+<button onclick="consultaCPF()">Buscar</button>
+</div>
 
-  <section style="padding:20px;">
-    <h2>📋 Resultado</h2>
-    <pre id="resultado">Aguardando consulta...</pre>
-  </section>
+<!-- IP -->
+<div class="card" id="ip">
+<h2>🌍 Consultar IP</h2>
+<input id="ipInput" placeholder="Digite o IP">
+<button onclick="consultaIP()">Buscar</button>
+</div>
 
-  <footer>
-    Feito com ❤️ por Israel | GitHub Pages 2025 🚀
-  </footer>
+<!-- Telefone -->
+<div class="card" id="telefone">
+<h2>📱 Consultar Número</h2>
+<input id="telInput" placeholder="Digite o número com DDD">
+<button onclick="consultaTelefone()">Buscar</button>
+</div>
 
-  <script>
-    function toggleMenu() {
-      let menu = document.getElementById("menu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
+<!-- Cloudflare -->
+<div class="card" id="cloudflare">
+<h2>☁️ Checar Cloudflare</h2>
+<input id="cfInput" placeholder="Digite o site (ex: google.com)">
+<button onclick="checkCloudflare()">Verificar</button>
+</div>
 
-    async function consultaCEP() {
-      let cep = document.getElementById("cepInput").value;
-      let res = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
-      let data = await res.json();
-      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
-    }
+<!-- WHOIS -->
+<div class="card" id="whois">
+<h2>📝 WHOIS Domínio</h2>
+<input id="whoisInput" placeholder="Digite o domínio">
+<button onclick="whoisDomain()">Consultar</button>
+</div>
 
-    async function consultaCNPJ() {
-      let cnpj = document.getElementById("cnpjInput").value;
-      let res = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
-      let data = await res.json();
-      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
-    }
+<!-- Ping -->
+<div class="card" id="ping">
+<h2>⚡ Ping Host</h2>
+<input id="pingInput" placeholder="Digite o host ou IP">
+<button onclick="pingHost()">Testar</button>
+</div>
 
-    async function consultaIP() {
-      let ip = document.getElementById("ipInput").value;
-      let res = await fetch(`https://ipinfo.io/${ip}/json`);
-      let data = await res.json();
-      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
-    }
-  </script>
+</div>
+
+<section style="padding:20px;">
+<h2>📋 Resultado</h2>
+<pre id="resultado">Aguardando consulta...</pre>
+</section>
+
+<footer>
+Feito com ❤️ por Israel | GitHub Pages 2025 🚀
+</footer>
+
+<script>
+function toggleMenu(){
+  let menu=document.getElementById("menu");
+  menu.style.display=menu.style.display==="flex"?"none":"flex";
+}
+
+// Função typing animado
+async function typeResult(text){
+  const resultado=document.getElementById("resultado");
+  resultado.textContent="";
+  for(let i=0;i<text.length;i++){
+    resultado.textContent+=text[i];
+    await new Promise(r=>setTimeout(r,10));
+  }
+}
+
+// CEP real
+async function consultaCEP(){
+  try{
+    let cep=document.getElementById("cepInput").value;
+    let res=await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar CEP.");}
+}
+
+// CNPJ real
+async function consultaCNPJ(){
+  try{
+    let cnpj=document.getElementById("cnpjInput").value;
+    let res=await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar CNPJ.");}
+}
+
+// CPF real
+async function consultaCPF(){
+  try{
+    let cpf=document.getElementById("cpfInput").value.replace(/\D/g,'');
+    if(!cpf){typeResult("Digite um CPF válido!"); return;}
+    let res=await fetch(`https://brasilapi.com.br/api/cpf/v1/${cpf}`);
+    if(!res.ok) throw new Error("CPF não encontrado.");
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult(err.message);}
+}
+
+// IP real
+async function consultaIP(){
+  try{
+    let ip=document.getElementById("ipInput").value;
+    let res=await fetch(`https://ipinfo.io/${ip}/json`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar IP.");}
+}
+
+// Telefone real (API pública, chave necessária)
+async function consultaTelefone(){
+  try{
+    let num=document.getElementById("telInput").value.replace(/\D/g,'');
+    if(!num){typeResult("Digite um número válido!"); return;}
+    let chave="COLOQUE_SUA_CHAVE_AQUI"; // Numverify ou similar
+    let res=await fetch(`https://apilayer.net/api/validate?access_key=${chave}&number=${num}`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar número.");}
+}
+
+// Cloudflare sem API
+async function checkCloudflare(){
+  try{
+    let site=document.getElementById("cfInput").value;
+    if(!site){typeResult("Digite um site válido!"); return;}
+    let res=await fetch(`https://${site}`, {method:"HEAD"});
+    let server=res.headers.get("server");
+    let isCF=server && server.toLowerCase().includes("cloudflare");
+    typeResult(`O site ${site} está${isCF?"":" não"} por trás do Cloudflare.`);
+  }catch(err){typeResult("Erro ao checar Cloudflare.");}
+}
+
+// WHOIS real
+async function whoisDomain(){
+  try{
+    let domain=document.getElementById("whoisInput").value;
+    if(!domain){typeResult("Digite um domínio válido!"); return;}
+    let chave="COLOQUE_SUA_CHAVE_AQUI"; // WHOIS API
+    let res=await fetch(`https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${chave}&domainName=${domain}&outputFormat=JSON`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar WHOIS.");}
+}
+
+// Ping real
+async function pingHost(){
+  try{
+    let host=document.getElementById("pingInput").value;
+    if(!host){typeResult("Digite um host/IP válido!"); return;}
+    let start=Date.now();
+    await fetch(`https://${host}`, {mode:"no-cors"});
+    let ms=Date.now()-start;
+    typeResult(`Host ${host} respondeu em ${ms}ms.`);
+  }catch(err){typeResult("Erro ao fazer ping.");}
+}
+</script>
 </body>
 </html>
