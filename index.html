@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Consulta BR Turbo Visual</title>
+<title>TOOL SIMPLES DE CONSULTA!</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{font-family:"Courier New",monospace;background:#0a0a0a;color:#e6e6e6;margin:0;scroll-behavior:smooth;}
@@ -25,22 +25,34 @@ footer{text-align:center;padding:15px;font-size:13px;color:#555;background:#111;
 </style>
 </head>
 <body>
+
 <header>
-<h1>Consulta BR Turbo</h1>
+<h1>Consulta BR Turbo Ultra</h1>
 <span class="menu-btn" onclick="toggleMenu()">☰</span>
 </header>
+
 <nav id="menu">
+<a href="#apikey">🔑 API Key</a>
 <a href="#cep">🔎 CEP</a>
 <a href="#cnpj">🏢 CNPJ</a>
 <a href="#cpf">🧾 CPF</a>
 <a href="#ip">🌍 IP</a>
 <a href="#telefone">📱 Número</a>
+<a href="#email">📧 Email</a>
 <a href="#cloudflare">☁️ Cloudflare</a>
 <a href="#whois">📝 WHOIS</a>
 <a href="#ping">⚡ Ping</a>
 </nav>
 
 <div class="container">
+
+<!-- API Key -->
+<div class="card" id="apikey">
+<h2>🔑 Sua API Key</h2>
+<input id="userApiKey" placeholder="Digite sua API Key">
+<button onclick="saveApiKey()">Salvar Key</button>
+</div>
+
 <!-- CEP -->
 <div class="card" id="cep">
 <h2>🔎 Consultar CEP</h2>
@@ -76,6 +88,13 @@ footer{text-align:center;padding:15px;font-size:13px;color:#555;background:#111;
 <button onclick="consultaTelefone()">Buscar</button>
 </div>
 
+<!-- Email -->
+<div class="card" id="email">
+<h2>📧 Consultar Email</h2>
+<input id="emailInput" placeholder="Digite o email">
+<button onclick="consultaEmail()">Buscar</button>
+</div>
+
 <!-- Cloudflare -->
 <div class="card" id="cloudflare">
 <h2>☁️ Checar Cloudflare</h2>
@@ -109,12 +128,13 @@ Feito com ❤️ por Israel | GitHub Pages 2025 🚀
 </footer>
 
 <script>
+// Menu
 function toggleMenu(){
   let menu=document.getElementById("menu");
   menu.style.display=menu.style.display==="flex"?"none":"flex";
 }
 
-// Função typing animado
+// Typing animado
 async function typeResult(text){
   const resultado=document.getElementById("resultado");
   resultado.textContent="";
@@ -124,7 +144,51 @@ async function typeResult(text){
   }
 }
 
-// CEP real
+// ---- CHEAT CODE + LIMITE DE API ----
+let cheatUnlocked = localStorage.getItem('cheatUnlocked') === 'true';
+let lastAPIUse = parseInt(localStorage.getItem('lastAPIUse')) || 0;
+
+function canUseAPI() {
+  if(cheatUnlocked) return true;
+  let now = Date.now();
+  if(now - lastAPIUse >= 5*60*1000){
+    lastAPIUse = now;
+    localStorage.setItem('lastAPIUse', lastAPIUse);
+    return true;
+  } else {
+    let wait = Math.ceil((5*60*1000 - (now - lastAPIUse))/1000);
+    typeResult(`⏳ Aguarde ${wait} segundos ou digite 12345 para liberar.`);
+    return false;
+  }
+}
+
+// Cheat code "12345"
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('input', e => {
+    if(e.target.value.includes('12345')){
+      cheatUnlocked = true;
+      localStorage.setItem('cheatUnlocked','true');
+      typeResult('🔥 Cheat code ativado! Todas APIs liberadas!');
+    }
+  });
+});
+
+// ---- API Key Usuário ----
+function saveApiKey(){
+  let key = document.getElementById("userApiKey").value.trim();
+  if(!key){ typeResult("Digite uma API Key válida!"); return; }
+  localStorage.setItem("userApiKey", key);
+  typeResult("✅ API Key salva com sucesso! Ela será usada nas consultas.");
+}
+function getApiKey(){ return localStorage.getItem("userApiKey") || ""; }
+window.addEventListener("load", () => {
+  let saved = getApiKey();
+  if(saved) document.getElementById("userApiKey").value = saved;
+});
+
+// ---- CONSULTAS ----
+
+// CEP
 async function consultaCEP(){
   try{
     let cep=document.getElementById("cepInput").value;
@@ -134,7 +198,7 @@ async function consultaCEP(){
   }catch(err){typeResult("Erro ao consultar CEP.");}
 }
 
-// CNPJ real
+// CNPJ
 async function consultaCNPJ(){
   try{
     let cnpj=document.getElementById("cnpjInput").value;
@@ -144,7 +208,7 @@ async function consultaCNPJ(){
   }catch(err){typeResult("Erro ao consultar CNPJ.");}
 }
 
-// CPF real
+// CPF
 async function consultaCPF(){
   try{
     let cpf=document.getElementById("cpfInput").value.replace(/\D/g,'');
@@ -156,7 +220,7 @@ async function consultaCPF(){
   }catch(err){typeResult(err.message);}
 }
 
-// IP real
+// IP
 async function consultaIP(){
   try{
     let ip=document.getElementById("ipInput").value;
@@ -166,19 +230,35 @@ async function consultaIP(){
   }catch(err){typeResult("Erro ao consultar IP.");}
 }
 
-// Telefone real (API pública, chave necessária)
+// Telefone (Numverify)
 async function consultaTelefone(){
+  if(!canUseAPI()) return;
   try{
     let num=document.getElementById("telInput").value.replace(/\D/g,'');
     if(!num){typeResult("Digite um número válido!"); return;}
-    let chave="COLOQUE_SUA_CHAVE_AQUI"; // Numverify ou similar
-    let res=await fetch(`https://apilayer.net/api/validate?access_key=${chave}&number=${num}`);
+    let chave = getApiKey();
+    if(!chave){typeResult("Salve sua API Key primeiro!"); return;}
+    let res=await fetch(`http://apilayer.net/api/validate?access_key=${chave}&number=${num}&country_code=BR&format=1`);
     let data=await res.json();
     typeResult(JSON.stringify(data,null,2));
   }catch(err){typeResult("Erro ao consultar número.");}
 }
 
-// Cloudflare sem API
+// Email
+async function consultaEmail(){
+  if(!canUseAPI()) return;
+  try{
+    let email=document.getElementById("emailInput").value.trim();
+    if(!email){typeResult("Digite um email válido!"); return;}
+    let chave = getApiKey();
+    if(!chave){typeResult("Salve sua API Key primeiro!"); return;}
+    let res=await fetch(`https://api.exemploemail.com/v1/lookup?apiKey=${chave}&email=${encodeURIComponent(email)}`);
+    let data=await res.json();
+    typeResult(JSON.stringify(data,null,2));
+  }catch(err){typeResult("Erro ao consultar email.");}
+}
+
+// Cloudflare
 async function checkCloudflare(){
   try{
     let site=document.getElementById("cfInput").value;
@@ -190,19 +270,21 @@ async function checkCloudflare(){
   }catch(err){typeResult("Erro ao checar Cloudflare.");}
 }
 
-// WHOIS real
+// WHOIS
 async function whoisDomain(){
+  if(!canUseAPI()) return;
   try{
     let domain=document.getElementById("whoisInput").value;
     if(!domain){typeResult("Digite um domínio válido!"); return;}
-    let chave="COLOQUE_SUA_CHAVE_AQUI"; // WHOIS API
+    let chave = getApiKey();
+    if(!chave){typeResult("Salve sua API Key primeiro!"); return;}
     let res=await fetch(`https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${chave}&domainName=${domain}&outputFormat=JSON`);
     let data=await res.json();
     typeResult(JSON.stringify(data,null,2));
   }catch(err){typeResult("Erro ao consultar WHOIS.");}
 }
 
-// Ping real
+// Ping
 async function pingHost(){
   try{
     let host=document.getElementById("pingInput").value;
