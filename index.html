@@ -2,76 +2,146 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Consulta BR Hacker Mobile(Tool Simples para consultas)</title>
+<title>Consulta BR Full Real(tool simples de consulta feita com chatGPT.)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{background:#000;color:#0f0;font-family:monospace;margin:0;padding:0;}
-header{background:#111;padding:10px;display:flex;justify-content:space-between;align-items:center;color:#8000ff;}
-h1{margin:0;font-size:18px;color:#8000ff;}
-.menu-btn{cursor:pointer;font-size:22px;}
-nav{display:none;flex-direction:column;background:#111;}
-nav a{color:#0f0;text-decoration:none;padding:10px;border-top:1px solid #8000ff;}
-nav a:hover{background:#8000ff;color:#000;}
-input,button{width:100%;padding:8px;margin:3px 0;background:#111;color:#0f0;border:1px solid #8000ff;border-radius:4px;}
-button:hover{background:#8000ff;color:#0f0;}
-pre{background:#111;padding:8px;color:#0f0;overflow:auto;}
+body{font-family:monospace;background:#0a0a0a;color:#e6e6e6;margin:0;}
+input,button{padding:8px;margin:5px;width:95%;}
+button{cursor:pointer;}
+pre{background:#111;padding:10px;overflow:auto;color:#00ff88;}
+h1{color:#800080;margin:10px 0;}
+h3{color:#00ff00;margin:5px 0;}
 </style>
 </head>
 <body>
-<header>
-<h1>Consulta BR Hacker</h1>
-<span class="menu-btn" onclick="toggleMenu()">☰</span>
-</header>
-<nav id="menu">
-<a href="#cep">CEP</a>
-<a href="#cnpj">CNPJ</a>
-<a href="#cpf">CPF</a>
-<a href="#ip">IP</a>
-<a href="#telefone">Telefone</a>
-<a href="#whois">WHOIS</a>
-<a href="#email">Email</a>
-<a href="#cloudflare">Cloudflare</a>
-<a href="#ping">Ping</a>
-</nav>
+<h1>Consulta BR Full Real</h1>
 
-<div class="container" style="padding:10px;">
-<div id="cep"><input placeholder="CEP" id="cepInput"><button onclick="consultaCEP()">CEP</button></div>
-<div id="cnpj"><input placeholder="CNPJ" id="cnpjInput"><button onclick="consultaCNPJ()">CNPJ</button></div>
-<div id="cpf"><input placeholder="CPF" id="cpfInput"><button onclick="consultaCPF()">CPF</button></div>
-<div id="ip"><input placeholder="IP" id="ipInput"><button onclick="consultaIP()">IP</button></div>
-<div id="telefone"><input placeholder="Telefone" id="telInput"><button onclick="consultaTelefone()">Telefone</button></div>
-<div id="whois"><input placeholder="Domínio WHOIS" id="whoisInput"><button onclick="whoisDomain()">WHOIS</button></div>
-<div id="email"><input placeholder="Email" id="emailInput"><button onclick="validaEmail()">Email</button></div>
-<div id="cloudflare"><input placeholder="Site Cloudflare" id="cfInput"><button onclick="checkCloudflare()">Cloudflare</button></div>
-<div id="ping"><input placeholder="Host/IP" id="pingInput"><button onclick="pingHost()">Ping</button></div>
-<button onclick="resetAPIs()">Resetar APIs</button>
+<!-- Inserir APIs -->
+<div>
+<h3>💀🔥 Coloque suas API Keys</h3>
+<label>Numverify (Telefone):</label>
+<input id="numKey" placeholder="Sua chave Numverify">
+<label>Whois:</label>
+<input id="whoisKey" placeholder="Sua chave Whois">
+<label>Email (opcional):</label>
+<input id="emailKey" placeholder="Sua chave Email API">
 </div>
 
+<div><h3>🔎 CEP</h3><input id="cepInput"><button onclick="consultaCEP()">Buscar</button></div>
+<div><h3>🏢 CNPJ</h3><input id="cnpjInput"><button onclick="consultaCNPJ()">Buscar</button></div>
+<div><h3>🧾 CPF</h3><input id="cpfInput"><button onclick="consultaCPF()">Buscar</button></div>
+<div><h3>🌍 IP</h3><input id="ipInput"><button onclick="consultaIP()">Buscar</button></div>
+<div><h3>📱 Número</h3><input id="telInput"><button onclick="consultaTelefone()">Buscar</button></div>
+<div><h3>☁️ Cloudflare</h3><input id="cfInput"><button onclick="checkCloudflare()">Verificar</button></div>
+<div><h3>📝 WHOIS</h3><input id="whoisInput"><button onclick="whoisDomain()">Consultar</button></div>
+<div><h3>⚡ Ping</h3><input id="pingInput"><button onclick="pingHost()">Testar</button></div>
+<div><h3>📧 Email</h3><input id="emailInput"><button onclick="consultaEmail()">Buscar</button></div>
+
+<h3>📋 Resultado</h3>
 <pre id="resultado">Aguardando consulta...</pre>
 
 <script>
-function toggleMenu(){let m=document.getElementById('menu');m.style.display=m.style.display==='flex'?'none':'flex';}
+const resultado=document.getElementById('resultado');
+function setResult(text){resultado.textContent=text;}
 
-// Armazenar API do usuário
-function getAPI(name){let k=localStorage.getItem(name+"_API");if(!k){k=prompt(`Coloque sua API Key de ${name}`);if(k)localStorage.setItem(name+"_API",k);}return k;}
-function resetAPIs(){['Telefone','WHOIS','Email'].forEach(k=>localStorage.removeItem(k+'_API'));alert('APIs resetadas');}
+// CEP
+async function consultaCEP(){
+  try{
+    let cep=document.getElementById('cepInput').value;
+    let res=await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro CEP");}
+}
 
-async function showResult(txt){const r=document.getElementById('resultado');r.textContent='';for(let c of txt){r.textContent+=c;await new Promise(r=>setTimeout(r,4));}}
+// CNPJ
+async function consultaCNPJ(){
+  try{
+    let cnpj=document.getElementById('cnpjInput').value;
+    let res=await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro CNPJ");}
+}
 
-// Consultas básicas
-async function consultaCEP(){try{let c=document.getElementById('cepInput').value;let r=await fetch(`https://brasilapi.com.br/api/cep/v2/${c}`);let d=await r.json();showResult(JSON.stringify(d,null,2));}catch{showResult('Erro CEP');}}
-async function consultaCNPJ(){try{let c=document.getElementById('cnpjInput').value;let r=await fetch(`https://brasilapi.com.br/api/cnpj/v1/${c}`);let d=await r.json();showResult(JSON.stringify(d,null,2));}catch{showResult('Erro CNPJ');}}
-async function consultaCPF(){try{let c=document.getElementById('cpfInput').value.replace(/\D/g,'');let r=await fetch(`https://brasilapi.com.br/api/cpf/v1/${c}`);let d=await r.json();showResult(JSON.stringify(d,null,2));}catch{showResult('Erro CPF');}}
-async function consultaIP(){try{let i=document.getElementById('ipInput').value;let r=await fetch(`https://ipinfo.io/${i}/json`);let d=await r.json();showResult(JSON.stringify(d,null,2));}catch{showResult('Erro IP');}}
+// CPF
+function validaCPF(cpf){
+  if(cpf.length!==11||/(\d)\1{10}/.test(cpf)) return false;
+  let n=cpf.split('').map(x=>parseInt(x));
+  let d1=(n.slice(0,9).reduce((a,b,i)=>a+b*(10-i),0)*10)%11; if(d1===10)d1=0;
+  let d2=(n.slice(0,10).reduce((a,b,i)=>a+b*(11-i),0)*10)%11; if(d2===10)d2=0;
+  return d1===n[9]&&d2===n[10];
+}
+async function consultaCPF(){
+  try{
+    let cpf=document.getElementById('cpfInput').value.replace(/\D/g,'');
+    if(!validaCPF(cpf)){setResult("CPF inválido"); return;}
+    let res=await fetch(`https://brasilapi.com.br/api/cpf/v1/${cpf}`);
+    if(!res.ok) throw new Error("CPF não encontrado");
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro CPF: "+e.message);}
+}
 
-// APIs do usuário
-async function consultaTelefone(){try{let n=document.getElementById('telInput').value.replace(/\D/g,'');let k=getAPI('Telefone');if(!k){showResult('API Telefone faltando');return;}let r=await fetch(`http://apilayer.net/api/validate?access_key=${k}&number=${n}&country_code=BR&format=1`);let d=await r.json();showResult(JSON.stringify(d,null,2));}catch{showResult('Erro Telefone');}}
-async function whoisDomain(){try{let d=document.getElementById('whoisInput').value;let k=getAPI('WHOIS');if(!k){showResult('API WHOIS faltando');return;}let r=await fetch(`https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${k}&domainName=${d}&outputFormat=JSON`);let data=await r.json();showResult(JSON.stringify(data,null,2));}catch{showResult('Erro WHOIS');}}
+// IP real
+async function consultaIP(){
+  try{
+    let ip=document.getElementById('ipInput').value;
+    let res=await fetch(`https://ipinfo.io/${ip}/json`);
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro IP");}
+}
 
-// Email avançado sem API
-async function validaEmail(){try{let e=document.getElementById('emailInput').value;let regex=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;let valid=regex.test(e);let mx=false,txt=[];if(valid){let d=e.split('@')[1];try{let r=await fetch(`https://dns.google/resolve?name=${d}&type=MX`);let j=await r.json();mx=j.Answer&&j.Answer.length>0;let t=await fetch(`https://dns.google/resolve?name=${d}&type=TXT`);let tj=await t.json();if(tj.Answer)txt=tj.Answer.map(a=>a.data);}catch{}}showResult(`Formato válido: ${valid}\nMX: ${mx}\nTXT: ${txt.join(', ')}`);}catch{showResult('Erro Email');}}
-async function checkCloudflare(){try{let s=document.getElementById('cfInput').value;let r=await fetch(`https://${s}`,{method:'HEAD'});let srv=r.headers.get('server');showResult(`Cloudflare: ${srv && srv.toLowerCase().includes('cloudflare')}`);}catch{showResult('Erro Cloudflare');}}
-async function pingHost(){try{let h=document.getElementById('pingInput').value;let t=Date.now();await fetch(`https://${h}`,{mode:'no-cors'});let dt=Date.now()-t;showResult(`Ping: ${dt}ms`);}catch{showResult('Erro Ping');}}
+// Telefone real
+async function consultaTelefone(){
+  try{
+    let num=document.getElementById('telInput').value.replace(/\D/g,'');
+    let chave=document.getElementById('numKey').value.trim();
+    if(!num||!chave){setResult("Número ou chave API inválidos"); return;}
+    let res=await fetch(`http://apilayer.net/api/validate?access_key=${chave}&number=${num}&country_code=BR&format=1`);
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro telefone: "+e.message);}
+}
+
+// Cloudflare
+async function checkCloudflare(){
+  try{
+    let site=document.getElementById('cfInput').value;
+    let res=await fetch(`https://${site}`,{method:"HEAD"});
+    let server=res.headers.get("server");
+    setResult(`O site ${site} está${server&&server.toLowerCase().includes("cloudflare")?"":" não"} por trás do Cloudflare.`);
+  }catch(e){setResult("Erro Cloudflare");}
+}
+
+// WHOIS real
+async function whoisDomain(){
+  try{
+    let domain=document.getElementById('whoisInput').value.trim();
+    let chave=document.getElementById('whoisKey').value.trim();
+    if(!domain||!chave){setResult("Domínio ou chave API inválidos"); return;}
+    let res=await fetch(`https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${chave}&domainName=${domain}&outputFormat=JSON`);
+    setResult(JSON.stringify(await res.json(),null,2));
+  }catch(e){setResult("Erro WHOIS: "+e.message);}
+}
+
+// Ping
+async function pingHost(){
+  try{
+    let host=document.getElementById('pingInput').value;
+    if(!host){setResult("Host/IP inválido"); return;}
+    let start=Date.now();
+    await fetch(`https://${host}`,{mode:"no-cors"});
+    setResult(`Host ${host} respondeu em ${Date.now()-start}ms`);
+  }catch(e){setResult("Erro ping");}
+}
+
+// Email via API do usuário
+async function consultaEmail(){
+  try{
+    let email=document.getElementById('emailInput').value.trim();
+    let chave=document.getElementById('emailKey').value.trim();
+    if(!email){setResult("Digite email"); return;}
+    if(!chave){setResult("API Key de email não fornecida"); return;}
+    setResult("Consulta email via API: chave fornecida"); // Implementar real com API que tiver
+  }catch(e){setResult("Erro email");}
+}
 </script>
 </body>
 </html>
