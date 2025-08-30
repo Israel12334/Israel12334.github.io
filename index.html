@@ -73,6 +73,11 @@ button:hover { background:#222; cursor:pointer; color:#00ff88; }
 <button onclick="fazerPing()">Ping</button>
 <div id="resPing" class="result"></div>
 
+<h2>Consulta Placa</h2>
+<input id="placa" placeholder="Digite placa ex: ABC1234">
+<button onclick="consultarPlaca()">Consultar Placa</button>
+<div id="resPlaca" class="result"></div>
+
 </div>
 
 <script>
@@ -203,6 +208,27 @@ function fazerPing(){
       document.getElementById("resPing").innerText="Ping aprox: "+Math.round(fim-inicio)+" ms";
     })
     .catch(e=>document.getElementById("resPing").innerText="Erro: "+e);
+}
+
+// ---------- Placa (BrasilAPI) ----------
+function consultarPlaca(){
+  let placa=document.getElementById("placa").value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(placa.length<7){ 
+    document.getElementById("resPlaca").innerText="Placa inválida!";
+    return;
+  }
+  fetch(`https://brasilapi.com.br/api/placa/v1/${placa}`)
+    .then(r=>{
+      if(!r.ok) throw new Error("Placa não encontrada ou inválida!");
+      return r.json();
+    })
+    .then(d=>{
+      document.getElementById("resPlaca").innerText=
+        `🚗 Placa: ${d.placa}\nMarca: ${d.marca}\nModelo: ${d.modelo}\nAno: ${d.ano}\nCor: ${d.cor}\nUF: ${d.uf}\nMunicípio: ${d.municipio}`;
+    })
+    .catch(e=>{
+      document.getElementById("resPlaca").innerText="Erro: "+e;
+    });
 }
 </script>
 </body>
