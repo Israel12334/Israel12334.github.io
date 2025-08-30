@@ -12,6 +12,8 @@ input, button { background:#111; color:#0f0; border:1px solid #8a2be2; margin:3p
 input:focus, button:focus { outline:none; border-color:#00ff88; }
 button:hover { background:#222; cursor:pointer; color:#00ff88; }
 .result { border:1px solid #00ff88; margin:5px; padding:5px; white-space:pre-wrap; min-height:20px; background:#111; color:#0f0; }
+#ipPanel { border:2px solid purple; padding:10px; background:#111; color:#ff00ff; margin:5px 0; }
+#ipPanel span { display:block; margin:3px 0; }
 .container { padding:15px; }
 </style>
 </head>
@@ -19,11 +21,14 @@ button:hover { background:#222; cursor:pointer; color:#00ff88; }
 <h1>TOOL DE CONSULTA SIMPLES FEITA COM CHATGPT 💀🔥</h1>
 <div class="container">
   
- <h3>CONSULTAS!:</h3>
+<h3>CONSULTAS!:</h3>
   
 <h2>Consulta IP</h2>
-<button onclick="consultarIP()">Meu IP</button>
-<div id="resIP" class="result"></div>
+<input id="ipInput" placeholder="Deixe vazio para pegar seu IP ou digite outro IP">
+<button onclick="consultarIP()">Consultar IP</button>
+<div id="resIP" class="result">
+  <div id="ipPanel"></div>
+</div>
 
 <h2>Consulta CEP</h2>
 <input id="cep" placeholder="Digite CEP">
@@ -73,10 +78,42 @@ button:hover { background:#222; cursor:pointer; color:#00ff88; }
 <script>
 // ---------- IP ----------
 function consultarIP(){
-  fetch("https://api64.ipify.org?format=json")
-    .then(r=>r.json())
-    .then(d=>document.getElementById("resIP").innerText="IP: "+d.ip)
-    .catch(e=>document.getElementById("resIP").innerText="Erro: "+e);
+  let ip=document.getElementById("ipInput").value;
+  let painel=document.getElementById("ipPanel");
+  painel.innerHTML="Carregando...";
+  
+  if(ip===""){
+    fetch("https://api64.ipify.org?format=json")
+      .then(r=>r.json())
+      .then(d=>{
+        ip=d.ip;
+        return fetch(`https://ipinfo.io/${ip}/json`);
+      })
+      .then(r=>r.json())
+      .then(info=>{
+        painel.innerHTML=`<span><b>IP:</b> ${info.ip}</span>
+                          <span><b>Cidade:</b> ${info.city}</span>
+                          <span><b>Região:</b> ${info.region}</span>
+                          <span><b>País:</b> ${info.country}</span>
+                          <span><b>Org:</b> ${info.org}</span>
+                          <span><b>Latitude/Longitude:</b> ${info.loc}</span>
+                          <span><b>Timezone:</b> ${info.timezone}</span>`;
+      })
+      .catch(e=>painel.innerHTML="Erro: "+e);
+  } else {
+    fetch(`https://ipinfo.io/${ip}/json`)
+      .then(r=>r.json())
+      .then(info=>{
+        painel.innerHTML=`<span><b>IP:</b> ${info.ip}</span>
+                          <span><b>Cidade:</b> ${info.city}</span>
+                          <span><b>Região:</b> ${info.region}</span>
+                          <span><b>País:</b> ${info.country}</span>
+                          <span><b>Org:</b> ${info.org}</span>
+                          <span><b>Latitude/Longitude:</b> ${info.loc}</span>
+                          <span><b>Timezone:</b> ${info.timezone}</span>`;
+      })
+      .catch(e=>painel.innerHTML="Erro: "+e);
+  }
 }
 
 // ---------- CEP ----------
