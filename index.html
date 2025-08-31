@@ -2,251 +2,236 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>TOOL INSANA 🚀🔥</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      color: #eee;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0f0;
-      color: #111;
-      text-align: center;
-      padding: 20px;
-      font-size: 26px;
-      font-weight: bold;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px #0f0;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 20px;
-    }
-    .card {
-      background: #111;
-      border: 2px solid #0f0;
-      border-radius: 15px;
-      padding: 20px;
-      width: 320px;
-      box-shadow: 0 0 20px #0f0;
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: scale(1.05);
-    }
-    .card h2 {
-      color: #0ff;
-      font-size: 20px;
-      margin-bottom: 15px;
-      text-shadow: 0 0 8px #0ff;
-    }
-    input, button {
-      width: 90%;
-      margin: 6px 0;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 14px;
-    }
-    input {
-      background: #222;
-      color: #0f0;
-      border: 1px solid #0f0;
-    }
-    button {
-      background: #0f0;
-      color: #111;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px #0f0;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #0ff;
-      box-shadow: 0 0 15px #0ff;
-    }
-    .result {
-      margin-top: 12px;
-      background: #222;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: left;
-      font-size: 13px;
-      overflow-x: auto;
-      max-height: 200px;
-      overflow-y: auto;
-      border: 1px solid #333;
-    }
-    footer {
-      text-align: center;
-      color: #555;
-      margin: 30px 0 10px;
-    }
-  </style>
+  <title>TOOL ÉTICA BR INSANA 💀🔥</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>💀 TOOL SIMPLES DE CONSULTA FEITA COM CHATGPT.!!! 🚀🔥</header>
-
+  <h1>TOOL DE CONSULTA SIMPLES FEITA COM CHATGPT 💀🔥</h1>
   <div class="container">
 
-    <!-- CPF -->
-    <div class="card">
-      <h2>Consulta CPF</h2>
-      <input id="cpfInput" placeholder="Digite o CPF">
-      <input id="cpfApiKey" placeholder="Sua API Key">
-      <button onclick="consultarCPF()">Consultar CPF</button>
-      <div id="resCPF" class="result"></div>
+    <h3>CONSULTAS!:</h3>
+
+    <h2>Consulta IP</h2>
+    <input id="ipInput" placeholder="Deixe vazio para pegar seu IP ou digite outro IP">
+    <button onclick="consultarIP()">Consultar IP</button>
+    <div id="resIP" class="result">
+      <div id="ipPanel"></div>
     </div>
 
-    <!-- CEP -->
-    <div class="card">
-      <h2>Consulta CEP</h2>
-      <input id="cepInput" placeholder="Digite o CEP">
-      <button onclick="consultarCEP()">Consultar CEP</button>
-      <div id="resCEP" class="result"></div>
-    </div>
+    <h2>Consulta CEP</h2>
+    <input id="cep" placeholder="Digite CEP">
+    <button onclick="consultarCEP()">Consultar CEP</button>
+    <div id="resCEP" class="result"></div>
 
-    <!-- CNPJ -->
-    <div class="card">
-      <h2>Consulta CNPJ</h2>
-      <input id="cnpjInput" placeholder="Digite o CNPJ">
-      <button onclick="consultarCNPJ()">Consultar CNPJ</button>
-      <div id="resCNPJ" class="result"></div>
-    </div>
+    <h2>Consulta CNPJ</h2>
+    <input id="cnpj" placeholder="Digite CNPJ">
+    <button onclick="consultarCNPJ()">Consultar CNPJ</button>
+    <div id="resCNPJ" class="result"></div>
 
-    <!-- Placa -->
-    <div class="card">
-      <h2>Consulta Placa</h2>
-      <input id="placaInput" placeholder="Digite a Placa do carro">
-      <button onclick="consultarPlaca()">Consultar Placa</button>
-      <div id="resPlaca" class="result"></div>
-    </div>
+    <h2>Consulta CPF</h2>
+    <input id="apiCPF" placeholder="API Key apicpf.com">
+    <input id="cpf" placeholder="Digite CPF">
+    <button onclick="consultarCPF()">Consultar CPF</button>
+    <div id="resCPF" class="result"></div>
 
-    <!-- Meu IP -->
-    <div class="card">
-      <h2>Meu IP</h2>
-      <button onclick="meuIP()">Mostrar Meu IP</button>
-      <div id="resMeuIP" class="result"></div>
-    </div>
+    <h2>Consulta Telefone</h2>
+    <input id="apiTel" placeholder="API Key Numverify">
+    <input id="telefone" placeholder="Número Ex: 6293213072">
+    <button onclick="consultarTelefone()">Consultar Telefone</button>
+    <div id="resTelefone" class="result"></div>
 
-    <!-- IP MAX POWER -->
-    <div class="card">
-      <h2>Consulta IP (MAX POWER 🔥)</h2>
-      <input id="ipInput" placeholder="Deixe vazio p/ seu IP ou digite outro IP">
-      <button onclick="consultarIP()">Consultar IP</button>
-      <div id="resIP" class="result"><div id="ipPanel"></div></div>
-    </div>
+    <h2>Consulta Whois</h2>
+    <input id="apiWhois" placeholder="API Key WhoisXML">
+    <input id="dominio" placeholder="Digite domínio ex: google.com">
+    <button onclick="consultarWhois()">Consultar Whois</button>
+    <div id="resWhois" class="result"></div>
+
+    <h2>Consulta Email FULL 🔥</h2>
+    <input id="email" placeholder="Digite email">
+    <button onclick="consultarEmail()">Consultar Email</button>
+    <div id="resEmail" class="result"></div>
+
+    <h2>Checar Cloudflare</h2>
+    <input id="siteCF" placeholder="Digite site">
+    <button onclick="checarCloudflare()">Checar</button>
+    <div id="resCF" class="result"></div>
+
+    <h2>Ping (HTTP)</h2>
+    <input id="sitePing" placeholder="Digite site ex: https://google.com">
+    <button onclick="fazerPing()">Ping</button>
+    <div id="resPing" class="result"></div>
+
+    <h2>Consulta Placa</h2>
+    <input id="placa" placeholder="Digite placa ex: ABC1234">
+    <button onclick="consultarPlaca()">Consultar Placa</button>
+    <div id="resPlaca" class="result"></div>
 
   </div>
 
-  <footer>Feito por chatGPT 💀🔥🚀</footer>
+  <script>
+  // ---------- IP ----------
+  function consultarIP(){
+    let ip=document.getElementById("ipInput").value;
+    let painel=document.getElementById("ipPanel");
+    painel.innerHTML="Carregando...";
 
-<script>
-// CPF
-async function consultarCPF(){
-  let cpf=document.getElementById("cpfInput").value.trim();
-  let apiKey=document.getElementById("cpfApiKey").value.trim();
-  let res=document.getElementById("resCPF");
-  res.innerHTML="Carregando...";
-  try{
-    let r=await fetch(`https://www.apicpf.com/api/v1/consulta/${cpf}`,{
-      headers:{Authorization:`ApiKey ${apiKey}`}
-    });
-    let d=await r.json();
-    res.innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>";
-  }catch(e){res.innerHTML="Erro: "+e;}
-}
-
-// CEP
-async function consultarCEP(){
-  let cep=document.getElementById("cepInput").value.trim();
-  let res=document.getElementById("resCEP");
-  res.innerHTML="Carregando...";
-  try{
-    let r=await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
-    let d=await r.json();
-    res.innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>";
-  }catch(e){res.innerHTML="Erro: "+e;}
-}
-
-// CNPJ
-async function consultarCNPJ(){
-  let cnpj=document.getElementById("cnpjInput").value.trim();
-  let res=document.getElementById("resCNPJ");
-  res.innerHTML="Carregando...";
-  try{
-    let r=await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
-    let d=await r.json();
-    res.innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>";
-  }catch(e){res.innerHTML="Erro: "+e;}
-}
-
-// Placa
-async function consultarPlaca(){
-  let placa=document.getElementById("placaInput").value.trim();
-  let res=document.getElementById("resPlaca");
-  res.innerHTML="Carregando...";
-  try{
-    let r=await fetch(`https://brasilapi.com.br/api/placa/v1/${placa}`);
-    let d=await r.json();
-    if(d.message){res.innerHTML="Erro: Placa não encontrada ou inválida!";}
-    else{res.innerHTML="<pre>"+JSON.stringify(d,null,2)+"</pre>";}
-  }catch(e){res.innerHTML="Erro: "+e;}
-}
-
-// Meu IP
-async function meuIP(){
-  let res=document.getElementById("resMeuIP");
-  res.innerHTML="Carregando...";
-  try{
-    let r=await fetch("https://api64.ipify.org?format=json");
-    let d=await r.json();
-    res.innerHTML="Seu IP: "+d.ip;
-  }catch(e){res.innerHTML="Erro: "+e;}
-}
-
-// IP MAX POWER
-async function consultarIP(){
-  let ip=document.getElementById("ipInput").value.trim();
-  let painel=document.getElementById("ipPanel");
-  painel.innerHTML="Carregando...";
-  try {
     if(ip===""){
-      let myip=await fetch("https://api64.ipify.org?format=json").then(r=>r.json());
-      ip=myip.ip;
+      fetch("https://api64.ipify.org?format=json")
+        .then(r=>r.json())
+        .then(d=>{
+          ip=d.ip;
+          return fetch(`https://ipinfo.io/${ip}/json`);
+        })
+        .then(r=>r.json())
+        .then(info=>{
+          painel.innerHTML=`<span><b>IP:</b> ${info.ip}</span>
+                            <span><b>Cidade:</b> ${info.city}</span>
+                            <span><b>Região:</b> ${info.region}</span>
+                            <span><b>País:</b> ${info.country}</span>
+                            <span><b>Org:</b> ${info.org}</span>
+                            <span><b>Latitude/Longitude:</b> ${info.loc}</span>
+                            <span><b>Timezone:</b> ${info.timezone}</span>`;
+        })
+        .catch(e=>painel.innerHTML="Erro: "+e);
+    } else {
+      fetch(`https://ipinfo.io/${ip}/json`)
+        .then(r=>r.json())
+        .then(info=>{
+          painel.innerHTML=`<span><b>IP:</b> ${info.ip}</span>
+                            <span><b>Cidade:</b> ${info.city}</span>
+                            <span><b>Região:</b> ${info.region}</span>
+                            <span><b>País:</b> ${info.country}</span>
+                            <span><b>Org:</b> ${info.org}</span>
+                            <span><b>Latitude/Longitude:</b> ${info.loc}</span>
+                            <span><b>Timezone:</b> ${info.timezone}</span>`;
+        })
+        .catch(e=>painel.innerHTML="Erro: "+e);
     }
-    let [info1, info2, info3] = await Promise.all([
-      fetch(`https://ipinfo.io/${ip}/json`).then(r=>r.json()),
-      fetch(`https://ipapi.co/${ip}/json/`).then(r=>r.json()),
-      fetch(`https://ipwho.is/${ip}`).then(r=>r.json())
-    ]);
-    let rdns = info3.reverse || info1.hostname || "Não encontrado";
-    painel.innerHTML=`
-      <span><b>IP:</b> ${ip}</span>
-      <span><b>Cidade:</b> ${info1.city || info2.city || info3.city}</span>
-      <span><b>Região:</b> ${info1.region || info2.region || info3.region}</span>
-      <span><b>País:</b> ${info1.country || info2.country_name || info3.country}</span>
-      <span><b>Continente:</b> ${info3.continent || "N/A"}</span>
-      <span><b>CEP:</b> ${info2.postal || info3.postal || "N/A"}</span>
-      <span><b>Org / ISP:</b> ${info1.org || info2.org || info3.connection?.isp || "N/A"}</span>
-      <span><b>ASN:</b> ${info3.connection?.asn || "N/A"}</span>
-      <span><b>Tipo de conexão:</b> ${info3.connection?.type || "N/A"}</span>
-      <span><b>Reverse DNS:</b> ${rdns}</span>
-      <span><b>Latitude/Longitude:</b> ${info1.loc || (info3.latitude+","+info3.longitude)}</span>
-      <span><b>Timezone:</b> ${info1.timezone || info2.timezone || info3.timezone}</span>
-      <span><b>Moeda local:</b> ${info3.currency?.name || "N/A"} (${info3.currency?.code||""})</span>
-      <span><b>VPN/Proxy:</b> ${info3.security?.vpn || info3.security?.proxy || info3.security?.tor ? "SIM 🔥" : "Não detectado"}</span>
-    `;
-  } catch(e){
-    painel.innerHTML="Erro: "+e;
   }
-}
-</script>
+
+  // ---------- CEP ----------
+  function consultarCEP(){
+    let cep=document.getElementById("cep").value;
+    fetch("https://brasilapi.com.br/api/cep/v2/"+cep)
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resCEP").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resCEP").innerText="Erro: "+e);
+  }
+
+  // ---------- CNPJ ----------
+  function consultarCNPJ(){
+    let cnpj=document.getElementById("cnpj").value;
+    fetch("https://brasilapi.com.br/api/cnpj/v1/"+cnpj)
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resCNPJ").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resCNPJ").innerText="Erro: "+e);
+  }
+
+  // ---------- CPF ----------
+  function consultarCPF(){
+    let cpf=document.getElementById("cpf").value.replace(/\D/g,'');
+    let apiKey=document.getElementById("apiCPF").value;
+    if(cpf.length!==11){ document.getElementById("resCPF").innerText="CPF inválido!"; return; }
+    fetch(`https://www.apicpf.com/api/consulta?cpf=${cpf}`, { headers:{ 'X-API-KEY': apiKey } })
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resCPF").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resCPF").innerText="Erro: "+e);
+  }
+
+  // ---------- Telefone ----------
+  function consultarTelefone(){
+    let api=document.getElementById("apiTel").value;
+    let numero=document.getElementById("telefone").value;
+    fetch(`http://apilayer.net/api/validate?access_key=${api}&number=${numero}&country_code=BR&format=1`)
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resTelefone").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resTelefone").innerText="Erro: "+e);
+  }
+
+  // ---------- Whois ----------
+  function consultarWhois(){
+    let api=document.getElementById("apiWhois").value;
+    let dominio=document.getElementById("dominio").value;
+    fetch(`https://www.whoisxmlapi.com/whoisserver/Whois?apiKey=${api}&domainName=${dominio}&outputFormat=JSON`)
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resWhois").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resWhois").innerText="Erro: "+e);
+  }
+
+  // ---------- Email FULL ----------
+  async function consultarEmail(){
+    let email=document.getElementById("email").value.trim();
+    let res=document.getElementById("resEmail");
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      res.innerText="❌ Email inválido!";
+      return;
+    }
+
+    let dominio=email.split("@")[1];
+    res.innerText="🔍 Analisando domínio: "+dominio+"...";
+
+    try{
+      let dns=await fetch(`https://dns.google/resolve?name=${dominio}&type=A`).then(r=>r.json());
+      let ip = dns.Answer && dns.Answer[0] ? dns.Answer[0].data : null;
+
+      if(!ip){
+        res.innerText="⚠️ Não foi possível resolver o domínio.";
+        return;
+      }
+
+      let info=await fetch(`https://ipinfo.io/${ip}/json`).then(r=>r.json());
+
+      res.innerText=
+        "✅ Email válido!\n"+
+        "📧 Domínio: "+dominio+"\n"+
+        "🌐 IP: "+ip+"\n"+
+        "🌍 País: "+(info.country||"Desconhecido")+"\n"+
+        "🏙️ Cidade: "+(info.city||"Desconhecida")+"\n"+
+        "📡 Org/Provedor: "+(info.org||"N/A")+"\n"+
+        "🕒 Timezone: "+(info.timezone||"N/A")+"\n";
+    }
+    catch(e){
+      res.innerText="Erro ao consultar: "+e;
+    }
+  }
+
+  // ---------- Cloudflare ----------
+  function checarCloudflare(){
+    let site=document.getElementById("siteCF").value;
+    fetch("https://"+site,{method:"HEAD"})
+      .then(r=>{
+        let srv=r.headers.get("server");
+        if(srv && srv.toLowerCase().includes("cloudflare")){
+          document.getElementById("resCF").innerText="✅ Site usa Cloudflare! Server: "+srv;
+        } else {
+          document.getElementById("resCF").innerText="❌ Não parece usar Cloudflare. Server: "+srv;
+        }
+      })
+      .catch(e=>document.getElementById("resCF").innerText="Erro: "+e);
+  }
+
+  // ---------- Ping ----------
+  function fazerPing(){
+    let site=document.getElementById("sitePing").value;
+    let inicio=performance.now();
+    fetch(site,{mode:"no-cors"})
+      .then(()=>{let fim=performance.now();
+        document.getElementById("resPing").innerText="Ping aprox: "+Math.round(fim-inicio)+" ms";
+      })
+      .catch(e=>document.getElementById("resPing").innerText="Erro: "+e);
+  }
+
+  // ---------- Placa ----------
+  function consultarPlaca(){
+    let placa=document.getElementById("placa").value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if(!placa){ document.getElementById("resPlaca").innerText="Digite uma placa válida!"; return; }
+    fetch(`https://brasilapi.com.br/api/placa/v1/${placa}`)
+      .then(r=>r.json())
+      .then(d=>document.getElementById("resPlaca").innerText=JSON.stringify(d,null,2))
+      .catch(e=>document.getElementById("resPlaca").innerText="Erro: Placa não encontrada ou inválida!");
+  }
+  </script>
 </body>
 </html>
