@@ -1,128 +1,273 @@
-/* ---------- BASE ---------- */
+/*
+ * Style by Gemini
+ * HACKER ÉTICO BR RAIZ 🇧🇷💀🔥
+ * Refatorado para maior consistência e performance.
+ */
+
+/*
+ * ===================================
+ * ÍNDICE
+ * ===================================
+ * 1. Variáveis Globais (:root)
+ * 2. Estilos de Base e Reset
+ * 3. Animações (@keyframes)
+ * 4. Layout Principal (body, .container)
+ * 5. Tipografia (h1, h2, h3)
+ * 6. Componentes (input, button, .result)
+ * 7. Classes Utilitárias e Específicas
+ * 8. Media Queries (Responsividade)
+ * ===================================
+ */
+
+/* 1. Variáveis Globais (:root) */
+:root {
+    /* Cores */
+    --bg-color: #121212;
+    --text-color: #00ff41;
+    --heading-color: #00ff41;
+    --accent-color: #00ff41;
+    --highlight-color: #ffcc00; /* Cor de destaque adicionada */
+    --container-bg: rgba(25, 25, 25, 0.9);
+    --input-bg: #1e1e1e;
+    --input-border: #333;
+    --button-bg: #00ff41;
+    --button-hover-bg: #38b14e; /* Cor de hover adicionada */
+    --button-text: #121212;
+    --result-bg: #001f0d;
+    --result-border: #006400;
+
+    /* Tipografia */
+    --font-mono: 'Courier New', Courier, monospace;
+
+    /* Outros */
+    --border-radius: 5px;
+    --transition-speed: 0.3s;
+}
+
+/* 2. Estilos de Base e Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-  background: #0a0a0a;
-  color: #00ffcc;
-  font-family: "Courier New", monospace;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 25px 25px;
 }
 
-/* ---------- HEADER ---------- */
-h1 {
-  text-align: center;
-  padding: 20px;
-  font-size: 28px;
-  color: #00ffcc;
-  text-shadow: 0 0 15px #00ffcc, 0 0 25px #0088ff;
-  border-bottom: 2px solid #00ffcc;
+/* 3. Animações (@keyframes) */
+@keyframes glitch {
+    0%, 100% {
+        text-shadow: none;
+        transform: skew(0);
+    }
+    10% {
+        text-shadow: 0.05em 0 0.05em var(--accent-color), -0.05em 0 0.05em #ff00ff;
+        transform: skew(-1deg);
+    }
+    20% {
+        text-shadow: -0.05em 0 0.05em #ff00ff, 0.05em 0 0.05em var(--accent-color);
+        transform: skew(2deg);
+    }
+    30% {
+        text-shadow: 0.05em 0 0.05em var(--accent-color), -0.05em 0 0.05em #ff00ff;
+        transform: skew(-1.5deg);
+    }
+    40% {
+        text-shadow: none;
+        transform: skew(0);
+    }
+    /* Adicionado mais variações para um efeito menos repetitivo */
+    60% {
+        clip-path: inset(50% 0 49% 0);
+    }
+    61% {
+        clip-path: none;
+    }
 }
 
-/* ---------- SUBTÍTULOS ---------- */
-h2 {
-  color: #ff0080;
-  margin-top: 25px;
-  font-size: 20px;
-  border-left: 4px solid #ff0080;
-  padding-left: 6px;
-  text-shadow: 0 0 10px #ff0080;
+@keyframes scan-line {
+    0% {
+        top: 0;
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
-h3 {
-  color: #ffcc00;
-  margin-top: 30px;
-  font-size: 18px;
-  text-transform: uppercase;
-}
-
-/* ---------- CONTAINER ---------- */
+/* 4. Layout Principal (body, .container) */
 .container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  border-left: 2px solid #222;
-  border-right: 2px solid #222;
+    background-color: var(--container-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--accent-color);
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid var(--accent-color);
+    position: relative;
+    z-index: 1;
+    overflow: hidden; /* Garante que o ::before não vaze */
 }
 
-/* ---------- INPUTS E BOTÕES ---------- */
-input, button {
-  background: #111;
-  color: #00ffcc;
-  border: 1px solid #00ffcc;
-  margin: 4px;
-  padding: 8px 10px;
-  font-family: monospace;
-  font-size: 14px;
-  border-radius: 5px;
-  transition: all 0.2s ease-in-out;
+/* Efeito de scanner melhorado */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+    box-shadow: 0 0 10px var(--accent-color);
+    animation: scan-line 4s infinite linear;
+    z-index: 2;
 }
 
-input:focus {
-  outline: none;
-  border-color: #ff0080;
-  box-shadow: 0 0 10px #ff0080;
+/* 5. Tipografia (h1, h2, h3) */
+h1 {
+    font-size: clamp(1.5em, 5vw, 2em); /* Fonte responsiva */
+    text-align: center;
+    margin-block-end: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--heading-color);
+    animation: glitch 8s infinite steps(1);
+    position: relative; /* Para garantir sobreposição correta */
+    z-index: 3;
+}
+
+h2, h3 {
+    color: var(--heading-color);
+    margin-block-start: 20px; /* Propriedades lógicas */
+    margin-block-end: 15px;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 1.5em;
+    border-block-end: 1px solid var(--accent-color); /* Propriedades lógicas */
+    padding-block-end: 5px;
+}
+
+b, strong {
+    color: var(--highlight-color);
+    font-weight: normal; /* Mantém o peso da fonte monoespaçada */
+}
+
+/* 6. Componentes (input, button, .result) */
+input,
+button {
+    width: 100%;
+    padding: 12px;
+    margin-block-end: 15px;
+    font-family: var(--font-mono);
+    font-size: 1em;
+    border-radius: var(--border-radius);
+    outline: none;
+    transition: box-shadow var(--transition-speed) ease-in-out, background-color var(--transition-speed) ease-in-out;
+}
+
+input {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+}
+
+input:focus,
+input:focus-visible {
+    box-shadow: 0 0 10px var(--accent-color), 0 0 15px var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 button {
-  cursor: pointer;
-  background: linear-gradient(135deg, #00ffcc, #0088ff);
-  color: #000;
-  font-weight: bold;
-  text-transform: uppercase;
-  border: none;
-  box-shadow: 0 0 8px #00ffcc;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.2s, background-color var(--transition-speed), box-shadow var(--transition-speed);
+    will-change: transform; /* Dica de performance para o navegador */
 }
 
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #00ffcc, 0 0 25px #0088ff;
+button:hover,
+button:focus-visible {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 255, 65, 0.3);
 }
 
-/* ---------- RESULTADOS ---------- */
+button:active {
+    transform: translateY(0);
+}
+
 .result {
-  border: 1px solid #00ffcc;
-  margin: 6px 0;
-  padding: 10px;
-  background: #111;
-  color: #00ffcc;
-  white-space: pre-wrap;
-  border-radius: 8px;
-  font-size: 13px;
-  box-shadow: inset 0 0 15px #00ffcc44;
+    background-color: var(--result-bg);
+    border: 1px solid var(--result-border);
+    padding: 15px;
+    margin-block-start: 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border-radius: var(--border-radius);
+    font-size: 0.9em;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    /* Estilização da barra de rolagem para Firefox e Webkit */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--result-bg);
 }
 
+.result::-webkit-scrollbar {
+    width: 8px;
+}
+
+.result::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+}
+
+.result::-webkit-scrollbar-track {
+    background-color: var(--result-bg);
+}
+
+/* 7. Classes Utilitárias e Específicas */
 #ipPanel {
-  border: 2px solid #ff0080;
-  padding: 12px;
-  margin-top: 10px;
-  background: #111;
-  border-radius: 8px;
-  color: #ff66cc;
-  text-shadow: 0 0 8px #ff0080;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espaçamento mais moderno que margin */
 }
 
-/* ---------- SCROLLBAR ---------- */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-::-webkit-scrollbar-thumb {
-  background: #00ffcc;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #ff0080;
-}
+/* 8. Media Queries (Responsividade) */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .container {
+        padding: 20px;
+    }
 
-/* ---------- ANIMAÇÃO PISCANTE (HACKER MODE) ---------- */
-@keyframes neonPulse {
-  0% { text-shadow: 0 0 5px #00ffcc, 0 0 15px #00ffcc; }
-  50% { text-shadow: 0 0 20px #ff0080, 0 0 40px #ff0080; }
-  100% { text-shadow: 0 0 5px #00ffcc, 0 0 15px #00ffcc; }
-}
-
-h1, h2 {
-  animation: neonPulse 3s infinite alternate;
+    h2, h3 {
+        font-size: 1.2em;
+    }
 }
