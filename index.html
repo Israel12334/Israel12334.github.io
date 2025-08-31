@@ -70,6 +70,22 @@
   </div>
 
   <script>
+  // ---------- Carregar APIs salvas ----------
+  window.onload = function() {
+    document.getElementById("apiCPF").value = localStorage.getItem("apiCPF") || "";
+    document.getElementById("apiTel").value = localStorage.getItem("apiTel") || "";
+    document.getElementById("apiWhois").value = localStorage.getItem("apiWhois") || "";
+  }
+
+  // ---------- Salvar API ----------
+  function saveAPI(key, value) {
+    localStorage.setItem(key, value);
+  }
+
+  document.getElementById("apiCPF").addEventListener("input", ()=>saveAPI("apiCPF", document.getElementById("apiCPF").value));
+  document.getElementById("apiTel").addEventListener("input", ()=>saveAPI("apiTel", document.getElementById("apiTel").value));
+  document.getElementById("apiWhois").addEventListener("input", ()=>saveAPI("apiWhois", document.getElementById("apiWhois").value));
+
   // ---------- IP ----------
   function consultarIP(){
     let ip=document.getElementById("ipInput").value;
